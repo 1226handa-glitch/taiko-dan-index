@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>段位道場ローテーション_候補リスト</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;900&display=swap');
+        body { font-family: 'M PLUS Rounded 1c', sans-serif; background-color: #e8dcc4; margin: 0; padding: 20px 10px; }
+        .badge-1st { background-color: #a4d975; border: 2px solid #82bf50; color: white; text-shadow: 1px 1px 0px #70a642, -1px -1px 0px #70a642, 1px -1px 0px #70a642, -1px 1px 0px #70a642; }
+        .badge-2nd { background-color: #79c6d9; border: 2px solid #55a8bd; color: white; text-shadow: 1px 1px 0px #4792a6, -1px -1px 0px #4792a6, 1px -1px 0px #4792a6, -1px 1px 0px #4792a6; }
+        .badge-3rd { background-color: #f18c8d; border: 2px solid #d96869; color: white; text-shadow: 1px 1px 0px #c25354, -1px -1px 0px #c25354, 1px -1px 0px #c25354, -1px 1px 0px #c25354; }
+        details { box-sizing: border-box; }
+        details > summary { list-style: none; cursor: pointer; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary .chevron-icon { transform: rotate(180deg); }
+        details[open] .details-content { animation: fadeInDown 0.3s ease-in-out; }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 候補①のコンテナ -->
+    <div class="w-full max-w-[400px] mx-auto mb-12">
+        <h2 class="text-xl font-black text-[#5b4636] border-b-4 border-[#5b4636] pb-2 mb-5 pl-2">候補①</h2>
+        <div id="cards-container-1" class="flex flex-col items-center space-y-6"></div>
+    </div>
+
+    <!-- 候補②のコンテナ -->
+    <div class="w-full max-w-[400px] mx-auto mb-12">
+        <h2 class="text-xl font-black text-[#5b4636] border-b-4 border-[#5b4636] pb-2 mb-5 pl-2">候補②</h2>
+        <div id="cards-container-2" class="flex flex-col items-center space-y-6"></div>
+    </div>
+
+    <!-- 候補③のコンテナ -->
+    <div class="w-full max-w-[400px] mx-auto mb-12">
+        <h2 class="text-xl font-black text-[#5b4636] border-b-4 border-[#5b4636] pb-2 mb-5 pl-2">候補③</h2>
+        <div id="cards-container-3" class="flex flex-col items-center space-y-6"></div>
+    </div>
+
+    <script>
+    const cardData = [
+        // ================= 候補① =================
+        {
+            category: 1, title: "烈伝！ドンだ～！日本一決定戦 2011", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E5%A4%96%E4%BC%9D/%E7%83%88%E4%BC%9D%EF%BC%81%E3%83%89%E3%83%B3%E3%81%A0%EF%BD%9E%EF%BC%81%E6%97%A5%E6%9C%AC%E4%B8%80%E6%B1%BA%E5%AE%9A%E6%88%A62011/::ref/%E7%83%88%E4%BC%9D%EF%BC%81%E3%83%89%E3%83%B3%E3%81%A0%EF%BD%9E%EF%BC%81%E6%97%A5%E6%9C%AC%E4%B8%80%E6%B1%BA%E5%AE%9A%E6%88%A62011%E3%80%80QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=98d6924edc0c1f2f55bccdc5c6e5c21e&t=20250826220806", 
+            isOpen: false,
+            songs: [{ name: "宇宙SAMURAI", ura: false }, { name: "天妖の舞", ura: false }, { name: "Black Rose Apostle", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "99％以上" },
+                { label: "叩けた数", type: "single", value: "2011打以上" },
+                { label: "スコア", type: "multi", values: ["950000点以上", "940000点以上", "930000点以上"] }
+            ]
+        },
+        {
+            category: 1, title: "烈伝！ドンだー！日本一決定戦 2013", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E5%A4%96%E4%BC%9D/%E7%83%88%E4%BC%9D%EF%BC%81%E3%83%89%E3%83%B3%E3%81%A0%E3%83%BC%EF%BC%81%E6%97%A5%E6%9C%AC%E4%B8%80%E6%B1%BA%E5%AE%9A%E6%88%A6%202013/::ref/%E7%83%88%E4%BC%9D%EF%BC%81%E3%83%89%E3%83%B3%E3%81%A0%E3%83%BC%EF%BC%81%E6%97%A5%E6%9C%AC%E4%B8%80%E6%B1%BA%E5%AE%9A%E6%88%A6%202013%E3%80%80QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=562b9c404a9e49e889d4b59c7f7442be&t=20250826220811", 
+            isOpen: false,
+            songs: [{ name: "愛想笑い", ura: false }, { name: "夜櫻ブレヰダアズ", ura: false }, { name: "D's Adventure Note", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "99%以上" },
+                { label: "叩けた数", type: "single", value: "2013打以上" },
+                { label: "スコア", type: "multi", values: ["960000点以上", "950000点以上", "940000点以上"] }
+            ]
+        },
+        {
+            category: 1, title: "ドコドン！ボーカル曲祭り#2", 
+            qrData: "https://i.imgur.com/3cShetv.png", 
+            isOpen: false,
+            songs: [{ name: "ブルちゃんのおや2", ura: false }, { name: "Solitude Star", ura: false }, { name: "EDY -エレクトリカルダンシングヨガ-", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100％以上" },
+                { label: "叩けた数", type: "single", value: "2551打以上" }
+            ]
+        },
+        {
+            category: 1, title: "すえPからの挑戦状#1", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E5%A4%96%E4%BC%9D/%E3%81%99%E3%81%88P%E3%81%8B%E3%82%89%E3%81%AE%E6%8C%91%E6%88%A6%E7%8A%B6%EF%BC%831/::ref/%E3%81%99%E3%81%88P%E3%81%8B%E3%82%89%E3%81%AE%E6%8C%91%E6%88%A6%E7%8A%B6%231%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=494373a2ab7fa1cdd73ce73e5ff73b66&t=20240405191111", 
+            isOpen: false,
+            songs: [{ name: "God knows...", ura: true }, { name: "いっそこのままで", ura: false }, { name: "シンクロニカ・エアライン", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "multi", values: ["78未満", "73未満", "94未満"] },
+                { label: "不可の数", type: "multi", values: ["12未満", "11未満", "15未満"] },
+                { label: "連打数", type: "multi", values: ["310打以上", "32打以上", "171打以上"] }
+            ]
+        },
+        {
+            category: 1, title: "マスブ・チュジー生誕記念#2022【極】", 
+            qrData: "https://i.imgur.com/K3AJvIi.png", 
+            isOpen: false,
+            songs: [{ name: "アレキサンダーのテーマ", ura: false }, { name: "Agent Hustle & Dr Hassle", ura: true }, { name: "亜空間遊泳ac12.5", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "98％以上" },
+                { label: "可の数", type: "single", value: "70未満" },
+                { label: "不可の数", type: "single", value: "26未満" },
+                { label: "連打数", type: "multi", values: ["70打以上", "20打以上", "60打以上"] }
+            ]
+        },
+        {
+            category: 1, title: "steμからの挑戦状 #1", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E5%A4%96%E4%BC%9D/ste%CE%BC%E3%81%8B%E3%82%89%E3%81%AE%E6%8C%91%E6%88%A6%E7%8A%B6%20%EF%BC%831/::ref/ste%CE%BC%E3%81%8B%E3%82%89%E3%81%AE%E6%8C%91%E6%88%A6%E7%8A%B6%20%231%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=0e2f4e509681258e6645ae0f1eb2310b&t=20240405191927", 
+            isOpen: false,
+            songs: [{ name: "1・2・さんしのでドンドカッカッ！", ura: false }, { name: "ぺた・PETA！？パンプキン", ura: false }, { name: "うちゅうひこうし冒険譚", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "98％以上" },
+                { label: "可の数", type: "multi", values: ["30未満", "70未満", "160未満"] },
+                { label: "不可の数", type: "single", value: "25未満" },
+                { label: "連打数", type: "multi", values: ["130打以上", "120打以上", "6打以上"] }
+            ]
+        },
+        {
+            category: 1, title: "太鼓チームからの挑戦状2022 #1", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E5%A4%96%E4%BC%9D/%E5%A4%AA%E9%BC%93%E3%83%81%E3%83%BC%E3%83%A0%E3%81%8B%E3%82%89%E3%81%AE%E6%8C%91%E6%88%A6%E7%8A%B62022%EF%BC%831/::ref/%E5%A4%AA%E9%BC%93%E3%83%81%E3%83%BC%E3%83%A0%E3%81%8B%E3%82%89%E3%81%AE%E6%8C%91%E6%88%A6%E7%8A%B62022%20%231%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=ef629e76fe8d0c5b0db309ceafe547b7&t=20240405190323", 
+            isOpen: false,
+            songs: [{ name: "画竜点睛", ura: false }, { name: "百花繚乱", ura: false }, { name: "一世風靡", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "99％以上" },
+                { label: "良の数", type: "multi", values: ["466以上", "575以上", "525以上"] },
+                { label: "不可の数", type: "multi", values: ["16未満", "20未満", "18未満"] }
+            ]
+        },
+
+        // ================= 候補② =================
+        {
+            category: 2, title: "復活！ムラサキ十段", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%83%A0%E3%83%A9%E3%82%B5%E3%82%AD/%E5%8D%81%E6%AE%B5/::ref/%E3%83%A0%E3%83%A9%E3%82%B5%E3%82%AD%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%8D%81%E6%AE%B5%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=de248343742aab7ca5faf5f02c194d91&t=20240404192713", 
+            isOpen: false,
+            songs: [{ name: "カラ鞠の花", ura: false }, { name: "蒼の旋律", ura: true }, { name: "てんぢく2000", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "single", value: "75未満" },
+                { label: "不可の数", type: "single", value: "15未満" }
+            ]
+        },
+        {
+            category: 2, title: "復活！ホワイト十段", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%83%9B%E3%83%AF%E3%82%A4%E3%83%88/%E5%8D%81%E6%AE%B5/::ref/%E3%83%9B%E3%83%AF%E3%82%A4%E3%83%88%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%8D%81%E6%AE%B5%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=9d9d1cd50f3c85f9c07f61433d9af28e&t=20240404192535", 
+            isOpen: false,
+            songs: [{ name: "X-DAY2000", ura: false }, { name: "カグツチ", ura: false }, { name: "そつおめしき", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "single", value: "75未満" },
+                { label: "不可の数", type: "single", value: "20未満" }
+            ]
+        },
+        {
+            category: 2, title: "復活！レッド十段", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%83%AC%E3%83%83%E3%83%89/%E5%8D%81%E6%AE%B5/::ref/%E3%83%AC%E3%83%83%E3%83%89%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%8D%81%E6%AE%B5%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=d34b1ba177b252854ff18a44b85efcdd&t=20240404192226", 
+            isOpen: false,
+            songs: [{ name: "朱の旋律", ura: false }, { name: "Ignis Danse", ura: false }, { name: "そつおめしき", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "single", value: "50未満" },
+                { label: "不可の数", type: "single", value: "8未満" }
+            ]
+        },
+        {
+            category: 2, title: "復活！イエロー十段", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%82%A4%E3%82%A8%E3%83%AD%E3%83%BC/%E5%8D%81%E6%AE%B5/::ref/%E3%82%A4%E3%82%A8%E3%83%AD%E3%83%BC%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%8D%81%E6%AE%B5%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=2ff9ec4ce0f086b81abcfe726bca65f7&t=20240404191928", 
+            isOpen: false,
+            songs: [{ name: "D′s Adventure Note", ura: false }, { name: "No Gravity", ura: false }, { name: "そつおめしき2ばん", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%以上" },
+                { label: "可の数", type: "single", value: "50未満" },
+                { label: "不可の数", type: "single", value: "7未満" }
+            ]
+        },
+        {
+            category: 2, title: "復活！ブルー十段", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%83%96%E3%83%AB%E3%83%BC/%E5%8D%81%E6%AE%B5/::ref/%E3%83%96%E3%83%AB%E3%83%BC%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%8D%81%E6%AE%B5%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=eca187119242c6db268b9b9779d154c0&t=20240404191324", 
+            isOpen: false,
+            songs: [{ name: "夜桜謝肉祭", ura: true }, { name: "Pastel Sealane", ura: false }, { name: "トイマチック☆パレード!!", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "single", value: "90未満" },
+                { label: "不可の数", type: "single", value: "8未満" }
+            ]
+        },
+        {
+            category: 2, title: "復活！グリーン十段", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%82%B0%E3%83%AA%E3%83%BC%E3%83%B3/%E5%8D%81%E6%AE%B5/::ref/%E3%82%B0%E3%83%AA%E3%83%BC%E3%83%B3%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%8D%81%E6%AE%B5%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=621f52ea3d0e98c610158d24a85e2141&t=20240404190911", 
+            isOpen: false,
+            songs: [{ name: "R.I.", ura: false }, { name: "千鼓千鼓", ura: false }, { name: "デッド・オア・ダイ", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "single", value: "90未満" },
+                { label: "不可の数", type: "single", value: "9未満" }
+            ]
+        },
+        {
+            category: 2, title: "復活！ニジイロ2020十段", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%83%8B%E3%82%B8%E3%82%A4%E3%83%AD2020/%E5%8D%81%E6%AE%B5/::ref/%E3%83%8B%E3%82%B8%E3%82%A4%E3%83%AD%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B42020%20%E5%8D%81%E6%AE%B5%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=a7adb6d44e1ee0e1b3e3ed4056ffe755&t=20240404190349", 
+            isOpen: false,
+            songs: [{ name: "Surf Zapping", ura: false }, { name: "SORA‐Ⅶ シグナスウォール", ura: false }, { name: "memoria ficta", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "multi", values: ["30未満", "30未満", "28未満"] },
+                { label: "不可の数", type: "single", value: "7未満" },
+                { label: "連打数", type: "multi", values: ["26打以上", "59打以上", "53打以上"] }
+            ]
+        },
+
+        // ================= 候補③ =================
+        {
+            category: 3, title: "復活！ソライロ十段", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%82%BD%E3%83%A9%E3%82%A4%E3%83%AD/%E5%8D%81%E6%AE%B5/::ref/%E3%82%BD%E3%83%A9%E3%82%A4%E3%83%AD%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%8D%81%E6%AE%B5%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=2894e08eb614dd2d09e962c15f665768&t=20240404193201", 
+            isOpen: false,
+            songs: [{ name: "Doom Noiz", ura: false }, { name: "燎原ノ舞", ura: false }, { name: "万戈イム－一ノ十", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "single", value: "30未満" },
+                { label: "不可の数", type: "single", value: "10未満" }
+            ]
+        },
+        {
+            category: 3, title: "復活！モモイロ十段", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%83%A2%E3%83%A2%E3%82%A4%E3%83%AD/%E5%8D%81%E6%AE%B5/::ref/%E3%83%A2%E3%83%A2%E3%82%A4%E3%83%AD%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%8D%81%E6%AE%B5%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=c9450d9aa19749180b2fe0d7a94ea427&t=20240404193002", 
+            isOpen: false,
+            songs: [{ name: "ナイトメア・サバイバー", ura: true }, { name: "Angel Halo", ura: false }, { name: "万戈イム－一ノ十", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "single", value: "30未満" },
+                { label: "不可の数", type: "single", value: "10未満" }
+            ]
+        },
+        {
+            category: 3, title: "復活！キミドリ十段", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%82%AD%E3%83%9F%E3%83%89%E3%83%AA/%E5%8D%81%E6%AE%B5/::ref/%E3%82%AD%E3%83%9F%E3%83%89%E3%83%AA%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%8D%81%E6%AE%B5%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=4d2dc64d0344201500b47737323d2f72&t=20240404192838", 
+            isOpen: false,
+            songs: [{ name: "Purple Rose Fusion", ura: false }, { name: "DEBSTEP！", ura: false }, { name: "燎原ノ舞", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "single", value: "30未満" },
+                { label: "不可の数", type: "single", value: "10未満" }
+            ]
+        },
+        {
+            category: 3, title: "復活！ムラサキ名人", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%83%A0%E3%83%A9%E3%82%B5%E3%82%AD/%E5%90%8D%E4%BA%BA/::ref/%E3%83%A0%E3%83%A9%E3%82%B5%E3%82%AD%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%90%8D%E4%BA%BA%20%E5%BE%A9%E6%B4%BB%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=c53716773688ad04bb31477c06d7c5bc&t=20260808155809", 
+            isOpen: false,
+            songs: [{ name: "弩蚊怒夏", ura: false }, { name: "はたラク2000", ura: false }, { name: "燎原ノ舞", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "single", value: "25未満" },
+                { label: "不可の数", type: "single", value: "5未満" }
+            ]
+        },
+        {
+            category: 3, title: "復活！レッド名人", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%83%AC%E3%83%83%E3%83%89/%E5%90%8D%E4%BA%BA/::ref/%E3%83%AC%E3%83%83%E3%83%89%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%90%8D%E4%BA%BA%20%E5%BE%A9%E6%B4%BB%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=860c7ab971fe3f02c3d75712e094504d&t=20240808152437", 
+            isOpen: false,
+            songs: [{ name: "Got more raves？", ura: true }, { name: "秋竜 ～Shiuryu～", ura: true }, { name: "FLOWER", ura: true }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "single", value: "20未満" },
+                { label: "不可の数", type: "single", value: "7未満" }
+            ]
+        },
+        {
+            category: 3, title: "復活！ブルー名人", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%83%96%E3%83%AB%E3%83%BC/%E5%90%8D%E4%BA%BA/::ref/%E3%83%96%E3%83%AB%E3%83%BC%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%90%8D%E4%BA%BA%20%E5%BE%A9%E6%B4%BB%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=5faf887f37035749f16d735b7acc45f0&t=20240404194754", 
+            isOpen: false,
+            songs: [{ name: "ココロボ", ura: false }, { name: "まるくてはやくてすさまじいリズム", ura: false }, { name: "EterNal Ring", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "single", value: "27未満" },
+                { label: "不可の数", type: "single", value: "5未満" }
+            ]
+        },
+        {
+            category: 3, title: "復活！グリーン名人", 
+            qrData: "https://cdn.wikiwiki.jp/to/w/taiko-fumen/%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4/%E3%82%B0%E3%83%AA%E3%83%BC%E3%83%B3/%E5%90%8D%E4%BA%BA/::ref/%E3%82%B0%E3%83%AA%E3%83%BC%E3%83%B3%E6%AE%B5%E4%BD%8D%E9%81%93%E5%A0%B4%20%E5%90%8D%E4%BA%BA%20%E5%BE%A9%E6%B4%BB%20QR%E3%82%B3%E3%83%BC%E3%83%89.png?rev=0553c3b14e4b5aa63fca21c9d662ddf2&t=20240404194050", 
+            isOpen: false,
+            songs: [{ name: "弩蚊怒夏", ura: false }, { name: "愛と浄罪の森", ura: false }, { name: "コネクトカラーズ", ura: false }],
+            conditions: [
+                { label: "魂ゲージ", type: "single", value: "100%" },
+                { label: "可の数", type: "single", value: "28未満" },
+                { label: "不可の数", type: "single", value: "5未満" }
+            ]
+        }
+    ];
+
+    const badges = ['badge-1st', 'badge-2nd', 'badge-3rd'];
+    const labels = ['1st', '2nd', '3rd'];
+
+    cardData.forEach(data => {
+        let songsHTML = '';
+        data.songs.forEach((song, idx) => {
+            const isUra = song.ura;
+            const displayName = isUra ? `${song.name}(裏)` : song.name;
+
+            songsHTML += `
+                <div class="bg-white rounded-full py-2.5 px-3 flex items-center shadow-sm border border-gray-100">
+                    <div class="w-9 h-9 rounded-full ${badges[idx]} flex items-center justify-center font-black text-[13px] mr-3 shrink-0">${labels[idx]}</div>
+                    <div class="font-bold text-[15px] text-gray-900 truncate">${displayName}</div>
+                </div>
+            `;
+        });
+
+        let conditionsHTML = '';
+        data.conditions.forEach(cond => {
+            conditionsHTML += `<div class="bg-[#f2d7b6] text-[#5b4636] font-bold text-[13px] px-3 py-1.5 rounded-sm mb-1.5">${cond.label}</div>`;
+            if (cond.type === 'single') {
+                conditionsHTML += `<div class="bg-white text-gray-800 text-[15px] px-3 py-2 rounded-sm mb-4 font-bold shadow-sm">${cond.value}</div>`;
+            } else if (cond.type === 'multi') {
+                conditionsHTML += `<div class="bg-white text-gray-800 text-[15px] p-3 rounded-sm mb-4 font-bold flex flex-col space-y-2.5 shadow-sm">`;
+                cond.values.forEach((val, idx) => {
+                    conditionsHTML += `<div class="flex items-center"><span class="w-6 h-6 rounded-full ${badges[idx]} flex items-center justify-center text-[10px] mr-3">${labels[idx]}</span>${val}</div>`;
+                });
+                conditionsHTML += `</div>`;
+            }
+        });
+
+        const qrImageSrc = data.qrData.startsWith('http') 
+            ? data.qrData 
+            : `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(data.qrData)}`;
+
+        const detailsHTML = `
+            <details class="w-full max-w-[400px] bg-[#fcf6e3] shadow-xl border-2 border-[#176043] rounded-sm group" ${data.isOpen ? 'open' : ''}>
+                <summary class="bg-[#176043] text-white p-3 flex justify-between items-center border-b-4 border-[#0c4029] select-none hover:bg-[#134d35] transition-colors">
+                    <h1 class="text-[15px] font-bold tracking-wide">${data.title}</h1>
+                    <svg class="w-5 h-5 transition-transform duration-300 chevron-icon shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </summary>
+                <div class="p-4 pb-6 details-content">
+                    <div class="bg-white p-3 rounded-md shadow-sm w-[160px] mx-auto mt-2 mb-6 border border-gray-200 flex justify-center items-center">
+                        <img src="${qrImageSrc}" alt="QR Code" class="w-full h-auto">
+                    </div>
+                    <div class="space-y-3 mb-6">${songsHTML}</div>
+                    <div class="border-[2.5px] border-[#5b4636] rounded-lg relative pt-7 pb-4 px-4 bg-[#fcf6e3]">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#5b4636] text-white px-8 py-1.5 rounded-full text-[14px] font-bold tracking-wider whitespace-nowrap">お題情報</div>
+                        ${conditionsHTML}
+                    </div>
+                </div>
+            </details>
+        `;
+        
+        const container = document.getElementById(`cards-container-${data.category}`);
+        if (container) {
+            container.insertAdjacentHTML('beforeend', detailsHTML);
+        }
+    });
+    </script>
+</body>
+</html>
